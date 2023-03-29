@@ -89,10 +89,20 @@ public abstract class Card {
    * - This list is then returned
    *
    * @return List of lines of this card
-   *         TODO: Implement this
+   *         TODO: Implement t his
    */
   public List<String> prettyPrint() {
-    return null;
+    List<String> list = new ArrayList<String>();
+
+    list.add("/-------\\");
+    if(this.strRep().length() == 1){
+      list.add("| " + this.cardColor + " | " + this.strRep() + " |");   // Spaces with short strRep
+    }else{
+      list.add("| " + this.cardColor + " |" + this.strRep() + "|");   // No space with long strRap
+    }
+    list.add("\\-------/");
+
+    return list;
   }
 
   @Override
