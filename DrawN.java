@@ -36,9 +36,15 @@ public class DrawN extends Card {
    */
   @Override
   public boolean matchValue(Card other) {
-    // hmm
-    return false;
+    // Check card color
+    // Check card value
+    if(this.getCardColor() == other.getCardColor() || this.matchValue(other)){
+      return true;
+    }else{
+      return false;   // false if neither are matches
+    }
   }
+
 
   @Override
   public String strRep() {
