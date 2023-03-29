@@ -55,6 +55,9 @@ public abstract class Card {
    *         TODO: Implement this
    */
   public boolean match(Card other) {
+    if(this.equals(other)){   // Object comparison
+      return true;
+    }
     return false;
   }
 
