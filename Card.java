@@ -52,7 +52,7 @@ public abstract class Card {
    *
    * @param other Card to match this card against
    * @return true if the two cards match and false otherwise
-   *         TODO: Implement this
+   *         D_TODO: Implement this
    */
   public boolean match(Card other) {
     if(this.equals(other)){   // Object comparison
@@ -89,7 +89,7 @@ public abstract class Card {
    * - This list is then returned
    *
    * @return List of lines of this card
-   *         TODO: Implement t his
+   *         D_TODO: Implement t his
    */
   public List<String> prettyPrint() {
     List<String> list = new ArrayList<String>();

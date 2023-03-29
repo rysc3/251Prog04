@@ -42,7 +42,7 @@ public final class Skip extends Card {
   public void doAction(Game game) {
     // prompt user
     System.out.println("Who would you like to skip? (n)ext or (s)pecific user?");
-    if(game.scanInput.nextLine.equals("thing")){
+    if(game.scanInput.equals("thing")){
       System.out.println("Thing");
     }
 
