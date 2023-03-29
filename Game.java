@@ -28,6 +28,8 @@ public final class Game {
    *                   TODO: Implement this
    */
   public Game(int numPlayers) {
+    Scanner scanner = new Scanner(System.in);
+    String scanInput = scanner.next();
     this.io = null;
     this.deck = createDeck();
     this.players = null;

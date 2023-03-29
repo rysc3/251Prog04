@@ -23,7 +23,17 @@ public class DrawN extends Card {
    */
   @Override
   public void doAction(Game game) {
+    /*
+     * if N == 1, we can check if it matches, and play the card if true
+     * if N == 4; their turn is just skipped after drawing cards
+     */
+    // Need to finish player & hand so we can take the cards and add to current
+    // Player's hand
+    if(this.getN() == 4){
+      game.getTopCard();
+    }else{
 
+    }
   }
 
   /**
@@ -32,7 +42,7 @@ public class DrawN extends Card {
    * @param other Other card to match against
    * @return true if other is an instanceof DrawN and our n equals their n, false
    *         otherwise
-   *         TODO: Implement this
+   *         D_TODO: Implement this
    */
   @Override
   public boolean matchValue(Card other) {
