@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
+// test
 public abstract class Card {
     private final Color cardColor;
 
