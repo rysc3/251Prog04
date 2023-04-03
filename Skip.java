@@ -5,6 +5,7 @@
  */
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public final class Skip extends Card {
 
@@ -38,14 +39,33 @@ public final class Skip extends Card {
    * @param game
    *             TODO: Implement this
    */
+  //TODO Figure out how to make this check if the number given with skip specific player
+  // isn't your own number
   @Override
   public void doAction(Game game) {
+    Scanner scan = new Scanner(System.in);
+    boolean validAns = false;
     // prompt user
     System.out.println("Who would you like to skip? (n)ext or (s)pecific user?");
-    if(game.scanInput.equals("thing")){
-      System.out.println("Thing");
+    while(validAns == false){
+      if(scan.next().equals('n')){  // Skip next player
+        System.out.println("I should be skipping the next player in Skip.java doAction but I'm printing this instead");
+        // Assume the above is valid:
+        validAns = true;
+      }else if(scan.next().equals('s')){  // Skip a specific player
+        int player = scan.nextInt();
+        System.out.println("Please choose from the following numbers: " + game.getNumPlayers());
+        // Check that the int they give is valid:
+        if(player < 0 || player > game.getNumPlayers()){
+          System.out.println(player + " is not valid");   //TODO Figure out how to display players to choose from
+        }
+        // Assume above is valid:
+        validAns = true;
+      }else{
+        // If user doesn't enter n or s
+        System.out.println("Acceptable answers are n or s.");
+      }
     }
-
   }
 
   @Override
