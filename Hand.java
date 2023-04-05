@@ -69,11 +69,26 @@ public final class Hand {
    * 0 1
    *
    * @return
-   *         TODO: Implement this
+   *         D_TODO: Implement this
    */
   @Override
   public String toString() {
-    return null;
+    StringBuilder str = new StringBuilder();
+    for(Card c : this.cards){   // For each card in the list of cards (the hand)
+      str.append(c.prettyPrint());
+    }
+    System.out.println("\n");
+    // we are now on the next line after the cards have all been printed:
+    for(int i=0; i<cards.size(); i++){
+      int remaining = cards.size();
+      str.append("\n");   // new line
+      str.append("    " + i);
+      if(remaining > 0){
+        str.append("      ");
+      }
+      remaining --;
+    }
+    return str.toString();
   }
 
   // Code you can use to test your implementation

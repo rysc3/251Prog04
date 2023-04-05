@@ -95,7 +95,7 @@ public class Player {
           System.out.println("Your hand still has no matches your turn is being passed");
         }else{
           // User's first turn wasn't playable, but their drawn card is playable
-
+          hand.toString();  // print out your hand
         }
 
       }else{  // If hand starts off with a match
