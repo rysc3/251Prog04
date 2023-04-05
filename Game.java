@@ -49,7 +49,10 @@ public final class Game {
    * TODO: Implement this
    */
   public void start() {
+    // // How to find the current player?
+    // while($curPlayer.numCardsRemaining() > 0){
 
+    // }
   }
 
   public String interact(String toUser) {
