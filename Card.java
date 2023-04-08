@@ -55,7 +55,13 @@ public abstract class Card {
    *         TODO: Implement this
    */
   public boolean match(Card other) {
-    if(this.equals(other)){   // Object comparison
+    if (this == other) { // exact match
+      return true;
+      // if either card is a wild card they can match
+    } else if (this.cardColor == Card.Color.WILD || other.cardColor == Card.Color.WILD) {
+      return true;
+      // if card number matches
+    }else if(this.cardColor == other.cardColor || this.strRep().equals(other.strRep())){
       return true;
     }
     return false;
@@ -95,10 +101,10 @@ public abstract class Card {
     List<String> list = new ArrayList<String>();
 
     list.add("/-------\\");
-    if(this.strRep().length() == 1){
-      list.add("| " + this.cardColor + " | " + this.strRep() + " |");   // Spaces with short strRep
-    }else{
-      list.add("| " + this.cardColor + " |" + this.strRep() + "|");   // No space with long strRap
+    if (this.strRep().length() == 1) {
+      list.add("| " + this.cardColor + " | " + this.strRep() + " |"); // Spaces with short strRep
+    } else {
+      list.add("| " + this.cardColor + " |" + this.strRep() + "|"); // No space with long strRap
     }
     list.add("\\-------/");
 

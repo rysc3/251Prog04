@@ -111,7 +111,7 @@ public final class UnusIterator<T> {
   /**
    * Simply calls flip on the dir member variable and
    * overwrites dir with this value
-   * TODO: Implement this
+   * D_TODO: Implement this
    */
   public void reverse() {
     dir.flip();
@@ -121,7 +121,7 @@ public final class UnusIterator<T> {
    * Increments the nth element of skips by 1
    *
    * @param n Index in skips list to increment
-   *          TODO: Implement this
+   *          D_TODO: Implement this
    */
   public void skip(int n) {
     // only do the skip if a valid n value is passed
