@@ -1,7 +1,7 @@
 /*
  * @author Ryan Scherbarth
  * cs251L
- * 4/5/23
+ * 4/8/23
  */
 import java.util.Arrays;
 import java.util.List;
@@ -30,10 +30,16 @@ public final class Hand {
    * @param game  State of the game
    * @param index Index of desired card to play in cards
    * @throws Card.CannotPlayCardException
-   *                                      TODO: Implement this
+   *                                      D_TODO: Implement this
    */
   public void playCard(Game game, int index) throws Card.CannotPlayCardException {
-
+    Card playedCard = cards.get(index);   // get current card
+    if(playedCard.match(game.getTopCard())){  // if valid card is given
+      game.playCard(playedCard);  // play card
+      cards.remove(index);  // remove from hand
+    }else{
+      throw new Card.CannotPlayCardException();
+    }
   }
 
   /**

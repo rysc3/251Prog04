@@ -52,7 +52,7 @@ public abstract class Card {
    *
    * @param other Card to match this card against
    * @return true if the two cards match and false otherwise
-   *         D_TODO: Implement this
+   *         TODO: Implement this
    */
   public boolean match(Card other) {
     if(this.equals(other)){   // Object comparison
