@@ -1,3 +1,5 @@
+import Deck.EmptyDeckException;
+
 /*
  * @author Ryan Scherbarth
  * cs251
@@ -29,10 +31,18 @@ public class DrawN extends Card {
      */
     // Need to finish player & hand so we can take the cards and add to current
     // Player's hand
-    if(this.getN() == 4){
-      game.getTopCard();
-    }else{
+    // TODO how to figure out who's turn it is?
+    Deck deck = game.getDeck();
+    try{
+      if(this.getN() == 4){
+        Card card = deck.drawCard();
+        // hand.addCard(card);
+      }else{
 
+      }
+    }
+    catch(Deck.EmptyDeckException e){
+      // Do something lol
     }
   }
 

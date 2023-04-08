@@ -66,11 +66,30 @@ public final class UnusIterator<T> {
    * - The internal index should then be returned
    *
    * @return Index of next player in the order respecting skips and reverses
-   *         TODO: Implement this
+   *         D_TODO: Implement this
    */
   private int findNextIndex(boolean decrement) {
+    int intIndex = getCurIndex() + dir.getAdder();
+    if(intIndex < 0){   // Loop around if we reach 0
+      intIndex = len - 1;
+    }else if(intIndex >= len){
+      intIndex = 0;
+    }
 
-    return 0;
+    while(skips.get(intIndex) != 0){
+      if(decrement){
+        skips.set(intIndex, skips.get(intIndex) - 1);
+      }
+    }
+
+    intIndex += dir.getAdder();
+
+    if(intIndex < 0){
+      intIndex = len - 1;
+    }else if(intIndex >= len){
+      intIndex = 0;
+    }
+    return intIndex; 
   }
 
   public T current() {

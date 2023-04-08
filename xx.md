@@ -5,5 +5,3 @@ Done:
 - Deck
 
 drawN doAction
-  player
-  hand

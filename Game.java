@@ -103,7 +103,7 @@ public final class Game {
    * - 1 zero
    * - 2 of every number
    * - 19 green cards
-   * - 1 zero
+   * - 1 zeroef
    * - 2 of every number
    * - 19 yellow cards
    * - 1 zero

@@ -67,12 +67,9 @@ public class Player {
    * "$cardNumStr is not a valid index, please try again."
    * D_TODO: Implement this
    */
-  // TODO figure out how to use giveSpace after each turn I don't wanna do this
-  // til last
   public void takeTurn() {
     int invalidTries = 0;
     while(!tryTurn()){
-      tryTurn();
       invalidTries ++;
       if(invalidTries == 5){
         giveSpace();
