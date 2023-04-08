@@ -28,13 +28,13 @@ public final class Game {
    *                   TODO: Implement this
    */
   public Game(int numPlayers) {
-    Scanner scanner = new Scanner(System.in);
-    String scanInput = scanner.next();
-    this.io = null;
+    this.io = new Scanner(System.in);
     this.deck = createDeck();
-    this.players = null;
-    this.numPlayers = numPlayers;
-    this.playArea = new ArrayDeque<>();
+    List<Player> playerList = new ArrayList<>();
+    for(int i=0; i<numPlayers; i++){
+      //v
+
+    }
   }
 
   /**
