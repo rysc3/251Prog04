@@ -114,7 +114,7 @@ public final class UnusIterator<T> {
    * TODO: Implement this
    */
   public void reverse() {
-
+    dir.flip();
   }
 
   /**
@@ -124,6 +124,9 @@ public final class UnusIterator<T> {
    *          TODO: Implement this
    */
   public void skip(int n) {
-
+    // only do the skip if a valid n value is passed
+    if(n >= 0 && n < skips.size()){
+      skips.set(n, skips.get(n) + 1);
+    }
   }
 }
