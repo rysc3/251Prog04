@@ -70,59 +70,56 @@ public class Player {
   // TODO figure out how to use giveSpace after each turn I don't wanna do this
   // til last
   public void takeTurn() {
-    // just keeps looping through tryTurn until we get a valid answer
+    int invalidTries = 0;
     while(!tryTurn()){
       tryTurn();
+      invalidTries ++;
+      if(invalidTries == 5){
+        giveSpace();
+        invalidTries = 0;
+      }
     }
   }
 
   public boolean tryTurn() {
     int numCards = hand.numCardsRemaining();
-    int invalidTries = 0;
 
-    while (hand.numCardsRemaining() == numCards) {
-      // Reprint the info if user put invalid input too many times
-      if (invalidTries == 5) {
-        giveSpace();
-        printGameInfo(game, hand);
-        invalidTries = 0;
-      }
-
-      if (emptyHand() || hand.noMatches(game.getTopCard())) { // User doesn't have valid cards to play to begin turn
+    if (emptyHand() || hand.noMatches(game.getTopCard())) { // User doesn't have valid cards to play to begin turn
+      game.interact("Your hand still has no matches your turn is being passed");
+      if (hand.noMatches(game.getTopCard())) { // After drawing one, there is still no valid card. Player is skipped
         game.interact("Your hand still has no matches your turn is being passed");
-        if (hand.noMatches(game.getTopCard())) { // After drawing one, there is still no valid card. Player is skipped
-          game.interact("Your hand still has no matches your turn is being passed");
-        } else { // no valid card to start, but drawn card was playable
-          hand.toString(); // print out your hand
-          game.interact("Which card would you like to play?");
-          numCards++;
-          // begin the loop for valid user input
-          Scanner userInput = new Scanner(System.in);
-          while (numCards == hand.numCardsRemaining()) {
-            if (!userInput.hasNextInt()) {
-              String garbage = userInput.nextLine(); // ignore whatever they put so we can collect new stuff
-              game.interact(garbage + " is not a valid integer, please try again.");
-            } else {
-              int input = userInput.nextInt();
-              // invalid index
-              if (input < 0 || input > hand.numCardsRemaining()) {
-                game.interact(input + " is not a valid index, please try again.");
-              } else {
-                // invalid match
-                if (playCard(game, input)) {
-                  userInput.close(); // close scanner
-                  return true; // turn was valid
-                }
-              }
-            }
-          }
-          userInput.close(); // close scanner
-        }
-      } else { // If hand starts off with a match
-        // handle match scenario here
+        return true;
+      } else { // no valid card to start, but drawn card was playable
+        game.interact(hand.toString()); // print out your hand
+        game.interact("Which card would you like to play?");
+        numCards++;
+        getValidInput(game, hand, numCards);
       }
+    }else{  // user has a card to play right away
+      getValidInput(game, hand, numCards);
     }
     return false; // turn was not valid
+  }
+
+  public void getValidInput(Game game, Hand hand, int numCards){
+    // initialize
+    Scanner userInput = new Scanner(System.in);
+
+    while (numCards == hand.numCardsRemaining()) {
+      if (!userInput.hasNextInt()) {  // User doesn't input an int
+        String garbage = userInput.nextLine();
+        game.interact(garbage + " is not a valid integer, please try again.");
+      } else {
+        int input = userInput.nextInt();
+        if (input < 0 || input > hand.numCardsRemaining()) {  // there is no card at the int user gave
+          game.interact(input + " is not a valid index, please try again.");
+        } else if(playCard(game, input)){  // user gave a valid card
+          numCards --;  // update num cards so while loop breaks
+          break;
+        }
+      }
+    }
+    userInput.close(); // close scanner
   }
 
   /*
