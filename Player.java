@@ -78,30 +78,33 @@ public class Player {
     while(hand.numCardsRemaining() == numCards){
       // Reprint the info if user put invalid input too many times
       if(invalidTries == 5){
-        System.out.println("Play area:\n");
-        game.getTopCard().prettyPrint();  // print deck card pretty
-        System.out.println("Hand:\n");
-        hand.toString();  // Prints all cards in hand pretty
+        printGameInfo(game, hand);
         invalidTries = 0;
       }
 
-      if(emptyHand() || hand.noMatches(game.getTopCard())){   // User doesn't have valid cards to play
+      if(emptyHand() || hand.noMatches(game.getTopCard())){   // User doesn't have valid cards to play to begin turn
         System.out.println("Your hand still has no matches your turn is being passed");
-        /*
-         * user has no valid cards, draw a card, if the next card is also not valid, skip his turn
-         * if the card is valid, print out info again so he can play.
-         */
-        if(hand.noMatches(game.getTopCard())){
+        if(hand.noMatches(game.getTopCard())){  // After drawing one, there is still no valid card. Player is skipped
           System.out.println("Your hand still has no matches your turn is being passed");
-        }else{
-          // User's first turn wasn't playable, but their drawn card is playable
+        }else{  // no valid card to start, but drawn card was playable
           hand.toString();  // print out your hand
         }
 
       }else{  // If hand starts off with a match
-        
+
       }
     }
+  }
+
+  /*
+   * Prints out all the game info at once, used to call after too many bad tries, 
+   * or just idk a lot of times so it should be its own function
+   */
+  public static void printGameInfo(Game game, Hand hand){
+    System.out.println("Play area:\n");
+    game.getTopCard().prettyPrint(); // print deck card pretty
+    System.out.println("Hand:\n");
+    System.out.println(hand.toString()); // Prints all cards in hand pretty
   }
 
   public boolean emptyHand() {
