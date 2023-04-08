@@ -1,3 +1,8 @@
+/*
+ * @author Ryan Scherbarth
+ * cs251
+ * 4/8/23
+ */
 public class Numbers extends Card {
   private final int n;
 

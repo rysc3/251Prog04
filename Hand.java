@@ -42,9 +42,19 @@ public final class Hand {
    *
    * @param topCard Card currently in play
    * @return true if match is found and false otherwise
-   *         TODO: Implement this
+   *         D_TODO: Implement this
    */
   public boolean noMatches(Card topCard) {
+    for(Card c : cards){
+      /*
+       * Actual card matching takes place in Card,
+       * this just calls card.
+       * 
+       * We loop through each card in our hand to check if one is 
+       * playable, if so return true
+       */
+      if(c.match(topCard)){ return true; }
+    }
     return false;
   }
 
