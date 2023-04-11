@@ -31,10 +31,19 @@ public final class Game {
     this.io = new Scanner(System.in);
     this.deck = createDeck();
     List<Player> playerList = new ArrayList<>();
+    /*
+     * Creates a player, named the index in which they're put in.
+     * Creates the player list, one by one creates the player, draw
+     * 5 cards for the player, and add them to the playerlist.
+     */
     for(int i=0; i<numPlayers; i++){
-      //v
-
+      Player player = new Player(Integer.toString(i), this);
+      player.drawCards(5);
+      playerList.add(player);
     }
+    this.players = new UnusIterator<>(playerList);  // Create the unusIterator
+    this.numPlayers = numPlayers;
+    this.playArea = new ArrayDeque<>();
   }
 
   /**
