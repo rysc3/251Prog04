@@ -30,11 +30,20 @@ public final class Game {
    *                   TODO: Implement this
    */
   public Game(int numPlayers) {
-    Scanner scanner = new Scanner(System.in);
-    String scanInput = scanner.next();
-    this.io = null;
+    this.io = new Scanner(System.in);
     this.deck = createDeck();
-    this.players = null;
+    List<Player> playerList = new ArrayList<>();
+    /*
+     * Creates a player, named the index in which they're put in.
+     * Creates the player list, one by one creates the player, draw
+     * 5 cards for the player, and add them to the playerlist.
+     */
+    for(int i=0; i<numPlayers; i++){
+      Player player = new Player(Integer.toString(i), this);
+      player.drawCards(5);
+      playerList.add(player);
+    }
+    this.players = new UnusIterator<>(playerList);  // Create the unusIterator
     this.numPlayers = numPlayers;
     this.playArea = new ArrayDeque<>();
   }
@@ -105,7 +114,7 @@ public final class Game {
    * - 1 zero
    * - 2 of every number
    * - 19 green cards
-   * - 1 zero
+   * - 1 zeroef
    * - 2 of every number
    * - 19 yellow cards
    * - 1 zero

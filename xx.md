@@ -3,4 +3,7 @@
 Done:
 - Card
 - Deck
+- unus iterator
+
+
 
