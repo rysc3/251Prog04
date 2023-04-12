@@ -6,6 +6,8 @@
  */
 import java.util.*;
 
+import Card.Color;
+
 public final class Game {
   private final Scanner io;
   private final UnusIterator<Player> players;
@@ -118,6 +120,16 @@ public final class Game {
    *         TODO: Implement this
    */
   private Deck createDeck() {
-    return null;
+    Deck deck = new Deck(null);
+    // red cards
+    for(int i=0; i<19; i++){
+      // create card
+      Card card = new Card(R);
+      Card.Color = Color.RED;
+      playArea.add(getTopCard());
+
+    }
+    deck.addCards(playArea);
+    return deck;
   }
 }
