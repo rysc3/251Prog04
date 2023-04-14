@@ -38,12 +38,12 @@ public final class Game {
      * Creates the player list, one by one creates the player, draw
      * 5 cards for the player, and add them to the playerlist.
      */
-    for(int i=0; i<numPlayers; i++){
+    for (int i = 0; i < numPlayers; i++) {
       Player player = new Player(Integer.toString(i), this);
       player.drawCards(5);
       playerList.add(player);
     }
-    this.players = new UnusIterator<>(playerList);  // Create the unusIterator
+    this.players = new UnusIterator<>(playerList); // Create the unusIterator
     this.numPlayers = numPlayers;
     this.playArea = new ArrayDeque<>();
   }
@@ -128,17 +128,35 @@ public final class Game {
    * @return A standard Unus deck of 108 cards
    *         TODO: Implement this
    */
-  private Deck createDeck() {
-    Deck deck = new Deck(null);
-    // red cards
-    for(int i=0; i<19; i++){
-      // create card
-      Card card = new Card(R);
-      Card.Color = Color.RED;
-      playArea.add(getTopCard());
+  public static List<Card> createDeck() {
+    List<Card> deck = new ArrayList<Card>();
+    Card.Color[] colors = Card.Color.values();
+    Card.Type[] types = { Card.Type.NUMBER, Card.Type.SKIP, Card.Type.REVERSE, Card.Type.DRAW2 };
 
+    for (Card.Color color : colors) {
+      for (Card.Type type : types) {
+        if (type == Card.Type.NUMBER) {
+          deck.add(new NumberCard(color, 0));
+          for (int i = 1; i < 10; i++) {
+            deck.add(new NumberCard(color, i));
+            deck.add(new NumberCard(color, i));
+          }
+        } else {
+          deck.add(Card.createSpecialCard(color, type));
+          deck.add(Card.createSpecialCard(color, type));
+        }
+      }
     }
-    deck.addCards(playArea);
+
+    for (Card.Type type : Card.Type.values()) {
+      if (type == Card.Type.WILD || type == Card.Type.WILD_DRAW4) {
+        for (int i = 0; i < 4; i++) {
+          deck.add(Card.createSpecialCard(null, type));
+        }
+      }
+    }
+
     return deck;
   }
+
 }
