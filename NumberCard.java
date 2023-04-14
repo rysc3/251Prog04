@@ -8,13 +8,43 @@ public class NumberCard extends Card {
 
   @Override
   public void doAction(Game game) {
-    // Implement the action for number cards
+		/*
+		 * here lives the logic for checking if a played card is valid
+		 * - color matches
+		 * - number matches
+		 *
+		 * if not, throw an error somehow.
+		 */
   }
 
   @Override
   public boolean matchValue(Card other) {
-    // Implement the value matching logic for number cards
-		return false;
+		/*
+		 * cards match if they have:
+		 * - same color
+		 * - same number
+		 *
+		 * Start by returning true if any of the cards are wild.
+		 *
+		 * First check if colors match, if not we check if the instance of other is a numberCard
+		 * 		if it isn't, we know that the numbers can't match, so its false. If it is, then we
+		 * 		have to create a new NumberCard object so we can access .number, compare the numbers
+		 * 		and check if they match in this way.
+		 */
+
+		if(other instanceof WildCard){ 	// Case: comparing num card to wild card, always a match
+			return true;
+		}
+
+		if(this.getCardColor() == other.getCardColor()){ 	// Case: Colors match
+			return true;
+		}else if(other instanceof NumberCard){ 	// Check if 'other' is a number card
+			NumberCard otherNumberCard = (NumberCard) other;
+			if(this.number == otherNumberCard.number){ 	// Case: Colors don't match, numbers do match
+				return true;
+			}
+		}
+		return false; 	// Case: Nothing matches
   }
 
   @Override
