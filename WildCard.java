@@ -1,26 +1,36 @@
-public class WildCard extends Card{
+/*
+ * @author Ryan Scherbarth
+ * cs251L
+ * 4/13/23
+ */
+public class WildCard extends Card {
 
-    public WildCard(Card.Color cardColor) {
-        super(cardColor);
-        //TODO Auto-generated constructor stub
+  public WildCard() {
+    super(Card.Color.WILD);
+  }
+
+  @Override
+  public void doAction(Game game) {
+    if(this.matchValue(game.getTopCard())){
+      game.playCard(this);
     }
+  }
 
-    @Override
-    public void doAction(Game game) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doAction'");
-    }
+  @Override
+  public boolean matchValue(Card other) {
+    /*
+     * if color matches
+     * if another wild card
+     *
+     * this function should just always return true;
+     */
+    // wild always matches
+    if(this instanceof WildCard || other instanceof WildCard || other instanceof WildDraw4Card) { return true; }
+    return false;
+  }
 
-    @Override
-    public boolean matchValue(Card other) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'matchValue'");
-    }
-
-    @Override
-    public String strRep() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'strRep'");
-    }
-
+  @Override
+  public String strRep() {
+    return "R";
+  }
 }

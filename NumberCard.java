@@ -1,3 +1,8 @@
+/*
+ * @author Ryan Scherbarth
+ * cs251L
+ * 4/13/23
+ */
 public class NumberCard extends Card {
   private int number;
 
@@ -9,12 +14,11 @@ public class NumberCard extends Card {
   @Override
   public void doAction(Game game) {
 		/*
-		 * here lives the logic for checking if a played card is valid
-		 * - color matches
-		 * - number matches
-		 *
-		 * if not, throw an error somehow.
+		 * should just need to check if matchValue is true
 		 */
+		if(this.matchValue(game.getTopCard())){
+			game.playCard(this);
+		}
   }
 
   @Override
@@ -31,10 +35,7 @@ public class NumberCard extends Card {
 		 * 		have to create a new NumberCard object so we can access .number, compare the numbers
 		 * 		and check if they match in this way.
 		 */
-
-		if(other instanceof WildCard){ 	// Case: comparing num card to wild card, always a match
-			return true;
-		}
+		if(other instanceof WildCard || other instanceof WildDraw4Card) { return true; }
 
 		if(this.getCardColor() == other.getCardColor()){ 	// Case: Colors match
 			return true;

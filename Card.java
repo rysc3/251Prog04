@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Card {
+  /*
+   * Draw2Card
+   * NumberCard
+   * ReverseCard
+   * SkipCard
+   * WildCard
+   * WildDraw4Card
+   */
   private final Color cardColor;
 
   public enum Color {

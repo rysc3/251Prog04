@@ -1,26 +1,38 @@
-public class ReverseCard extends Card{
+/*
+ * @author Ryan Scherbarth
+ * cs251L
+ * 4/13/23
+ */
+public class ReverseCard extends Card {
 
-    public ReverseCard(Card.Color cardColor) {
-        super(cardColor);
-        //TODO Auto-generated constructor stub
+  public ReverseCard(Card.Color cardColor) {
+    super(cardColor);
+  }
+
+  @Override
+  public void doAction(Game game) {
+    if(this.matchValue(game.getTopCard())){  // play the card if valid
+      game.playCard(this);
     }
+  }
 
-    @Override
-    public void doAction(Game game) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doAction'");
+  @Override
+  public boolean matchValue(Card other) {
+    /*
+     * match if:
+     * - another reverse card
+     * - same color
+     */
+    if(this.getCardColor() == other.getCardColor()){  // color match
+      return true;
+    }else if(other instanceof ReverseCard){   // another reverse
+      return true;
     }
+    return false;   // no match
+  }
 
-    @Override
-    public boolean matchValue(Card other) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'matchValue'");
-    }
-
-    @Override
-    public String strRep() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'strRep'");
-    }
-
+  @Override
+  public String strRep() {
+    return "R";
+  }
 }

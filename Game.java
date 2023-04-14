@@ -6,8 +6,6 @@
  */
 import java.util.*;
 
-import Card.Color;
-
 public final class Game {
   private final Scanner io;
   private final UnusIterator<Player> players;
@@ -128,35 +126,77 @@ public final class Game {
    * @return A standard Unus deck of 108 cards
    *         TODO: Implement this
    */
-  public static List<Card> createDeck() {
+  private Deck createDeck() {
     List<Card> deck = new ArrayList<Card>();
-    Card.Color[] colors = Card.Color.values();
-    Card.Type[] types = { Card.Type.NUMBER, Card.Type.SKIP, Card.Type.REVERSE, Card.Type.DRAW2 };
 
-    for (Card.Color color : colors) {
-      for (Card.Type type : types) {
-        if (type == Card.Type.NUMBER) {
-          deck.add(new NumberCard(color, 0));
-          for (int i = 1; i < 10; i++) {
-            deck.add(new NumberCard(color, i));
-            deck.add(new NumberCard(color, i));
-          }
-        } else {
-          deck.add(Card.createSpecialCard(color, type));
-          deck.add(Card.createSpecialCard(color, type));
-        }
+    // Add 19 red cards
+    for (int i = 0; i < 19; i++) {
+      deck.add(new NumberCard(Card.Color.RED, i));
+      if (i > 0) {
+        deck.add(new NumberCard(Card.Color.RED, i));
       }
     }
 
-    for (Card.Type type : Card.Type.values()) {
-      if (type == Card.Type.WILD || type == Card.Type.WILD_DRAW4) {
-        for (int i = 0; i < 4; i++) {
-          deck.add(Card.createSpecialCard(null, type));
-        }
+    // Add 19 blue cards
+    for (int i = 0; i < 19; i++) {
+      deck.add(new NumberCard(Card.Color.BLUE, i));
+      if (i > 0) {
+        deck.add(new NumberCard(Card.Color.BLUE, i));
       }
     }
 
-    return deck;
+    // Add 19 green cards
+    for (int i = 0; i < 19; i++) {
+      deck.add(new NumberCard(Card.Color.GREEN, i));
+      if (i > 0) {
+        deck.add(new NumberCard(Card.Color.GREEN, i));
+      }
+    }
+
+    // Add 19 yellow cards
+    for (int i = 0; i < 19; i++) {
+      deck.add(new NumberCard(Card.Color.YELLOW, i));
+      if (i > 0) {
+        deck.add(new NumberCard(Card.Color.YELLOW, i));
+      }
+    }
+
+    // Add 8 skip cards - two of each color
+    for (int i = 0; i < 8; i++) {
+      deck.add(new SkipCard(Card.Color.RED));
+      deck.add(new SkipCard(Card.Color.YELLOW));
+      deck.add(new SkipCard(Card.Color.BLUE));
+      deck.add(new SkipCard(Card.Color.GREEN));
+    }
+
+    // Add 8 reverse cards - two of each color
+    for (int i = 0; i < 8; i++) {
+      deck.add(new ReverseCard(Card.Color.RED));
+      deck.add(new ReverseCard(Card.Color.YELLOW));
+      deck.add(new ReverseCard(Card.Color.BLUE));
+      deck.add(new ReverseCard(Card.Color.GREEN));
+    }
+
+    // Add 8 draw 2 cards - two of each color
+    for (int i = 0; i < 8; i++) {
+      deck.add(new Draw2Card(Card.Color.RED));
+      deck.add(new Draw2Card(Card.Color.YELLOW));
+      deck.add(new Draw2Card(Card.Color.BLUE));
+      deck.add(new Draw2Card(Card.Color.GREEN));
+    }
+
+    // Add 4 wild cards
+    for (int i = 0; i < 4; i++) {
+      deck.add(new WildCard());
+    }
+
+    // Add 4 wild draw 4 cards
+    for (int i = 0; i < 4; i++) {
+      deck.add(new WildDraw4Card());
+    }
+
+    Deck ret = new Deck(deck);  // conv. from card list to deck before returning
+    return ret;
   }
 
 }

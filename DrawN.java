@@ -1,5 +1,3 @@
-import Deck.EmptyDeckException;
-
 /*
  * @author Ryan Scherbarth
  * cs251

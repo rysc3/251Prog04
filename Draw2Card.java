@@ -1,26 +1,35 @@
-public class Draw2Card extends Card{
+/*
+ * @author Ryan Scherbarth
+ * cs251L
+ * 4/13/23
+ */
+public class Draw2Card extends Card {
 
-    public Draw2Card(Card.Color cardColor) {
-        super(cardColor);
-        //TODO Auto-generated constructor stub
+  public Draw2Card(Card.Color cardColor) {
+    super(Card.Color.WILD);
+  }
+
+  @Override
+  public void doAction(Game game) {
+    if(this.matchValue(game.getTopCard())){
+      game.playCard(this);
     }
+  }
 
-    @Override
-    public void doAction(Game game) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'doAction'");
+  @Override
+  public boolean matchValue(Card other) {
+    if(other instanceof WildCard || other instanceof WildDraw4Card){ return true; }
+
+    if(this.getCardColor() == other.getCardColor()){  // same color
+      return true;
+    }else if(other instanceof Draw2Card){   // also a match card
+      return true;
     }
+    return false;
+  }
 
-    @Override
-    public boolean matchValue(Card other) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'matchValue'");
-    }
-
-    @Override
-    public String strRep() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'strRep'");
-    }
-
+  @Override
+  public String strRep() {
+    return "D+2";
+  }
 }
