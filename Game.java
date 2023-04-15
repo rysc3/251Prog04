@@ -29,20 +29,20 @@ public final class Game {
    */
   public Game(int numPlayers) {
     this.io = new Scanner(System.in);
+
     this.deck = createDeck();
+
     List<Player> playerList = new ArrayList<>();
-    /*
-     * Creates a player, named the index in which they're put in.
-     * Creates the player list, one by one creates the player, draw
-     * 5 cards for the player, and add them to the playerlist.
-     */
-    for (int i = 0; i < numPlayers; i++) {
-      Player player = new Player(Integer.toString(i), this);
-      player.drawCards(5);
+
+    for(int i=0; i<numPlayers; i++){
+      Player player = new Player(String.valueOf(i), this);
       playerList.add(player);
     }
+
     this.players = new UnusIterator<>(playerList); // Create the unusIterator
+
     this.numPlayers = numPlayers;
+
     this.playArea = new ArrayDeque<>();
   }
 
@@ -60,24 +60,50 @@ public final class Game {
   public void start() {
     // // How to find the current player?
     // initialization
+
+
+    // We know the deck is working properly and is full
+    // try{
+    //   for(int i=0; i<108; i++){
+    //     System.out.println(deck.drawCard());
+    //   }
+    // }catch(Deck.EmptyDeckException f){
+    //   System.out.println("fuck sake");
+    // }
+
     try{
+      // Shuffle deck
+      deck.shuffleDeck();
+
+
+      // Hand out cards
+      // System.out.println("number of players: " + numPlayers);  // NumPlayers is working properly
+
+      System.out.println("Hand: ");
+      System.out.println(players.current().hand);
+      // System.out.println(players.current().hand);
+      for(int i=0; i<numPlayers; i++){  // for each player
+        players.current().drawCards(5);
+        System.out.println(players.current().hand.toString());   // DEBUG
+        players.next();
+      }
+
+      // Add card to play area
+      playArea.add(deck.drawCard());
+
       if(playArea.size() < 5){
         System.out.println(playArea.size() + " cards remain in the play area.");
       }
-
-      deck.shuffleDeck();   // shuffle
-      Card top = deck.drawCard();
-      playArea.add(top);
     }
     catch(Deck.EmptyDeckException e){
-      System.out.println("Deck was empty, reshuffling play area into deck.");
-      shufflePlayAreaIntoDeck();
+      System.out.println("Can't start with empty deck.");
     }
 
     while(true){
       Player curPlayer = players.current();
       System.out.println("Play Area:");
-      System.out.println(playArea.getFirst());
+      System.out.println(playArea.getFirst());  // print play area
+      // System.out.println(curPlayer.hand);   // print your hand
       if(curPlayer.emptyHand()){
         interact(curPlayer + " won!");
         break;

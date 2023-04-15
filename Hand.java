@@ -1,3 +1,4 @@
+
 /*
  * @author Ryan Scherbarth
  * cs251L
@@ -33,11 +34,11 @@ public final class Hand {
    *                                      D_TODO: Implement this
    */
   public void playCard(Game game, int index) throws Card.CannotPlayCardException {
-    Card playedCard = cards.get(index);   // get current card
-    if(playedCard.match(game.getTopCard())){  // if valid card is given
-      game.playCard(playedCard);  // play card
-      cards.remove(index);  // remove from hand
-    }else{
+    Card playedCard = cards.get(index); // get current card
+    if (playedCard.match(game.getTopCard())) { // if valid card is given
+      game.playCard(playedCard); // play card
+      cards.remove(index); // remove from hand
+    } else {
       throw new Card.CannotPlayCardException();
     }
   }
@@ -51,15 +52,17 @@ public final class Hand {
    *         D_TODO: Implement this
    */
   public boolean noMatches(Card topCard) {
-    for(Card c : cards){
+    for (Card c : cards) {
       /*
        * Actual card matching takes place in Card,
        * this just calls card.
-       * 
-       * We loop through each card in our hand to check if one is 
+       *
+       * We loop through each card in our hand to check if one is
        * playable, if so return true
        */
-      if(c.match(topCard)){ return true; }
+      if (c.match(topCard)) {
+        return true;
+      }
     }
     return false;
   }
@@ -90,20 +93,35 @@ public final class Hand {
   @Override
   public String toString() {
     StringBuilder str = new StringBuilder();
-    for(Card c : this.cards){   // For each card in the list of cards (the hand)
-      str.append(c.prettyPrint());
-    }
-    System.out.println("\n");
-    // we are now on the next line after the cards have all been printed:
-    for(int i=0; i<cards.size(); i++){
-      int remaining = cards.size();
-      str.append("\n");   // new line
-      str.append("    " + i);
-      if(remaining > 0){
-        str.append("      ");
+
+    // Find the maximum number of lines in all the cards
+    int maxLines = 0;
+    for (Card c : this.cards) {
+      int numLines = c.prettyPrint().size();
+      if (numLines > maxLines) {
+        maxLines = numLines;
       }
-      remaining --;
     }
+
+    // Append each line of output for all cards, separated by spaces
+    for (int i = 0; i < maxLines; i++) {
+      for (Card c : this.cards) {
+        List<String> prettyPrintedCard = c.prettyPrint();
+        if (i < prettyPrintedCard.size()) {
+          str.append(" " + prettyPrintedCard.get(i) + " ");
+        } else {
+          str.append("      "); // Use spaces of equal width
+        }
+      }
+      str.append("\n");
+    }
+
+    // Print index labels
+    for (int i = 0; i < cards.size(); i++) {
+      str.append("     " + i + "     ");
+    }
+    str.append("\n");
+
     return str.toString();
   }
 

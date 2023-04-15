@@ -89,7 +89,7 @@ public final class UnusIterator<T> {
     }else if(intIndex >= len){
       intIndex = 0;
     }
-    return intIndex; 
+    return intIndex;
   }
 
   public T current() {

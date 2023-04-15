@@ -31,12 +31,11 @@ public class Player {
   public void drawCards(int num) {
     try {
       for (int i = 0; i < num; i++) {
-        game.getDeck().toString();  // DEBUG
         Card currentCard = game.getDeck().drawCard();
-        currentCard.prettyPrint();  // DEBUG
         hand.addCard(currentCard);
       }
     } catch (Deck.EmptyDeckException e) { // Deck throws empty deck
+      System.out.println("Shuffling play area into the deck again.");
       game.shufflePlayAreaIntoDeck(); // reshuffle
     }
   }
