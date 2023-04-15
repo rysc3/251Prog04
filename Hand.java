@@ -22,6 +22,10 @@ public final class Hand {
     return cards.size();
   }
 
+  public Card getCard(int index){
+    return cards.get(index);
+  }
+
   /**
    * This function does the following:
    * - Gets the current card using index
@@ -37,6 +41,33 @@ public final class Hand {
     Card playedCard = cards.get(index); // get current card
     if (playedCard.match(game.getTopCard())) { // if valid card is given
       game.playCard(playedCard); // play card
+      /*
+       * easier to handle this after the card has been played, since we can get the top card
+       * as many times as we want but its more work to get the card out of the users hand.
+       * need to then figure out if the card was a special card,
+       * Draw 2, 4
+       * Skip
+       * Reverse
+       *
+       * and if so, pass the info to unusIterator
+       */
+      Player added = game.getPlayers().getAtIndex(game.getPlayers().getCurIndex());
+      if(game.getTopCard().strRep().charAt(0) == 'D'){  // Draw Card
+
+        // Check if the strRep of the card is a +4
+        if(game.getTopCard().strRep().charAt(game.getTopCard().strRep().length() - 1) == '4'){
+          added.drawCards(4);
+        }else{
+          added.drawCards(2);
+        }
+      }
+      if(game.getTopCard().strRep().charAt(0) == 'S'){  // Skip Card
+        game.getPlayers().skip(1);
+      }
+      if(game.getTopCard().strRep().charAt(0) == 'R'){  // Reverse Card
+        game.getPlayers().reverse();
+      }
+
       cards.remove(index); // remove from hand
     } else {
       throw new Card.CannotPlayCardException();

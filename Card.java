@@ -84,6 +84,17 @@ public abstract class Card {
     game.playCard(this);
   }
 
+  public int checkDraw(){
+    int draw = 0;
+    if(this.strRep().charAt(0) == 'D'){
+      // this means it is a draw card
+      draw = Integer.parseInt(this.strRep());
+    }else{
+      return 0;
+    }
+    return draw;
+  }
+
   /**
    * This function does the following:
    * - Creates a List<String>

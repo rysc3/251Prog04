@@ -96,6 +96,10 @@ public final class UnusIterator<T> {
     return ls.get(curIndex);
   }
 
+  public T getAtIndex(int index){
+    return this.ls.get(index);
+  }
+
   public int getCurIndex() {
     return curIndex;
   }

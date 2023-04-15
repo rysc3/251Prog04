@@ -6,7 +6,7 @@
 public class Draw2Card extends Card {
 
   public Draw2Card(Card.Color cardColor) {
-    super(Card.Color.WILD);
+    super(cardColor);
   }
 
   @Override
