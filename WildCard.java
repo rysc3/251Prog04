@@ -31,6 +31,6 @@ public class WildCard extends Card {
 
   @Override
   public String strRep() {
-    return "R";
+    return "W";
   }
 }

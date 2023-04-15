@@ -7,6 +7,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.print.attribute.standard.PrinterInfo;
+
 public class Player {
   private final String name;
   private final Game game;
@@ -31,8 +33,11 @@ public class Player {
   public void drawCards(int num) {
     try {
       for (int i = 0; i < num; i++) {
+        // System.out.println(game.getDeck().drawCard());
         Card currentCard = game.getDeck().drawCard();
+        // System.out.println("current: " + currentCard);
         hand.addCard(currentCard);
+        // System.out.println("new hand: " + hand.toString());
       }
     } catch (Deck.EmptyDeckException e) { // Deck throws empty deck
       System.out.println("Shuffling play area into the deck again.");
@@ -69,97 +74,148 @@ public class Player {
    * D_TODO: Implement this
    */
   public void takeTurn() {
-    int invalidTries = 0;
-    while(!tryTurn()){
-      invalidTries ++;
-      if(invalidTries == 5){
-        giveSpace();
-        invalidTries = 0;
-      }
-    }
-  }
+    boolean valid = false;
 
-  public boolean tryTurn() {
-    int numCards = hand.numCardsRemaining();
+    // Loop until the user successfully plays a card
+    while (!valid) {
+      // Print "Play area:"
+      // game.interact("Play area:");
 
-    if (emptyHand() || hand.noMatches(game.getTopCard())) { // User doesn't have valid cards to play to begin turn
-      game.interact("Your hand still has no matches your turn is being passed");
-      if (hand.noMatches(game.getTopCard())) { // After drawing one, there is still no valid card. Player is skipped
-        game.interact("Your hand still has no matches your turn is being passed");
-        return true;
-      } else { // no valid card to start, but drawn card was playable
-        game.interact(hand.toString()); // print out your hand
-        game.interact("Which card would you like to play?");
-        numCards++;
-        getValidInput(game, hand, numCards);
-      }
-    }else{  // user has a card to play right away
-      getValidInput(game, hand, numCards);
-    }
-    return false; // turn was not valid
-  }
+      // System.out.println("Play area:\n");
 
-  public void getValidInput(Game game, Hand hand, int numCards){
-    // initialize
-    Scanner userInput = new Scanner(System.in);
+      // Print the top card
+      // game.interact(game.getTopCard().toString());
 
-    while (numCards == hand.numCardsRemaining()) {
-      if (!userInput.hasNextInt()) {  // User doesn't input an int
-        String garbage = userInput.nextLine();
-        game.interact(garbage + " is not a valid integer, please try again.");
-      } else {
-        int input = userInput.nextInt();
-        if (input < 0 || input > hand.numCardsRemaining()) {  // there is no card at the int user gave
-          game.interact(input + " is not a valid index, please try again.");
-        } else if(playCard(game, input)){  // user gave a valid card
-          numCards --;  // update num cards so while loop breaks
-          break;
+      // System.out.println(game.getTopCard());  //TODO
+
+      // Check for matches against the top card
+      if (hand.noMatches(game.getTopCard())) {
+        // Print "Your hand had no matches, a card was drawn."
+        // game.interact("Your hand had no matches, a card was drawn.");
+        System.out.println("Your hand had no matches, a card was drawn.");
+        drawCards(1);
+
+        // Check if hand still has no matches
+        if (hand.noMatches(game.getTopCard())) {
+          // Print "Your hand still has no matches, your turn is being passed"
+          // game.interact("Your hand still has no matches, your turn is being passed");
+          System.out.println("Your hand still has no matches, your turn is being passed");
+          drawCards(1);
+          valid = true; // end the turn
+        }else{
+          game.printInfo(this);
+          String inputStr = game.interact("Which card would you like to play?");
+
         }
       }
+
+      String inputStr = game.interact("Which card would you like to play?");
+      try {
+        int inputInt = Integer.parseInt(inputStr);
+        if(inputInt < 0 || inputInt > hand.numCardsRemaining()){
+          game.interact(inputStr + " is not a valid index, please try again.");
+        }else{
+          hand.playCard(game, inputInt);
+          valid = true;
+        }
+      }
+      catch(Card.CannotPlayCardException c){
+        // game.interact("Card " + inputStr + " cannot currently be played, please try again.");
+        System.out.println("Card " + inputStr + " cannot currently be played.");
+      }
     }
-    userInput.close(); // close scanner
+    // TODO: Perform the actual move based on the user's input
   }
 
-  /*
-   * Prints out all the game info at once, used to call after too many bad tries,
-   * or just idk a lot of times so it should be its own function
-   */
-  public static void printGameInfo(Game game, Hand hand) {
-    System.out.println("Play area:\n");
-    game.getTopCard().prettyPrint(); // print deck card pretty
-    System.out.println("Hand:\n");
-    System.out.println(hand.toString()); // Prints all cards in hand pretty
+  public void validTurn(){
+
   }
 
-  public boolean tryTurn(Game game, int numCards) {
-    return false;
-  }
+  // public boolean tryTurn() {
+  // int numCards = hand.numCardsRemaining();
 
-  /*
-   * method to be used to play the card and catch the error if invalid
-   * assums we have a valid game and int to pass through, so you
-   * need to check that the userInput scanner object is given an int
-   * before passing to playCard.
-   */
-  public boolean playCard(Game game, int input) {
-    try {
-      hand.playCard(game, input);
-    } catch (Card.CannotPlayCardException e) { // catch error yell at user
-      StringBuilder str = new StringBuilder();
-      str.append("Card ");
-      str.append(input);
-      str.append(" cannot currently be played, please try again.");
-      game.interact(str.toString());
-      return false;
-    }
-    return true;
-  }
+  // if (emptyHand() || hand.noMatches(game.getTopCard())) { // User doesn't have
+  // valid cards to play to begin turn
+  // game.interact("Your hand still has no matches your turn is being passed");
+  // if (hand.noMatches(game.getTopCard())) { // After drawing one, there is still
+  // no valid card. Player is skipped
+  // game.interact("Your hand still has no matches your turn is being passed");
+  // return true;
+  // } else { // no valid card to start, but drawn card was playable
+  // game.interact(hand.toString()); // print out your hand
+  // game.interact("Which card would you like to play?");
+  // numCards++;
+  // getValidInput(game, hand, numCards);
+  // }
+  // }else{ // user has a card to play right away
+  // getValidInput(game, hand, numCards);
+  // }
+  // return false; // turn was not valid
+  // }
 
-  /*
-   * another helper method, prints some space inbewteen each
-   * play so its more clear and easier to tell when its a new
-   * turn.
-   */
+  // public void getValidInput(Game game, Hand hand, int numCards){
+  // // initialize
+  // Scanner userInput = new Scanner(System.in);
+
+  // while (numCards == hand.numCardsRemaining()) {
+  // if (!userInput.hasNextInt()) { // User doesn't input an int
+  // String garbage = userInput.nextLine();
+  // game.interact(garbage + " is not a valid integer, please try again.");
+  // } else {
+  // int input = userInput.nextInt();
+  // if (input < 0 || input > hand.numCardsRemaining()) { // there is no card at
+  // the int user gave
+  // game.interact(input + " is not a valid index, please try again.");
+  // } else if(playCard(game, input)){ // user gave a valid card
+  // numCards --; // update num cards so while loop breaks
+  // break;
+  // }
+  // }
+  // }
+  // userInput.close(); // close scanner
+  // }
+
+  // /*
+  // * Prints out all the game info at once, used to call after too many bad
+  // tries,
+  // * or just idk a lot of times so it should be its own function
+  // */
+  // public static void printGameInfo(Game game, Hand hand) {
+  // System.out.println("Play area:\n");
+  // game.getTopCard().prettyPrint(); // print deck card pretty
+  // System.out.println("Hand:\n");
+  // System.out.println(hand.toString()); // Prints all cards in hand pretty
+  // }
+
+  // public boolean tryTurn(Game game, int numCards) {
+  // return false;
+  // }
+
+  // /*
+  // * method to be used to play the card and catch the error if invalid
+  // * assums we have a valid game and int to pass through, so you
+  // * need to check that the userInput scanner object is given an int
+  // * before passing to playCard.
+  // */
+  // public boolean playCard(Game game, int input) {
+  // try {
+  // hand.playCard(game, input);
+  // } catch (Card.CannotPlayCardException e) { // catch error yell at user
+  // StringBuilder str = new StringBuilder();
+  // str.append("Card ");
+  // str.append(input);
+  // str.append(" cannot currently be played, please try again.");
+  // game.interact(str.toString());
+  // return false;
+  // }
+  // return true;
+  // }
+
+  // /*
+  // * another helper method, prints some space inbewteen each
+  // * play so its more clear and easier to tell when its a new
+  // * turn.
+  // */
   public static void giveSpace() {
     for (int i = 0; i < 5; i++) {
       System.out.println("\n");

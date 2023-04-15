@@ -5,6 +5,9 @@
  * 3/29/23
  */
 import java.util.*;
+import java.util.spi.CurrencyNameProvider;
+
+import javax.sound.midi.Soundbank;
 
 public final class Game {
   private final Scanner io;
@@ -36,6 +39,7 @@ public final class Game {
 
     for(int i=0; i<numPlayers; i++){
       Player player = new Player(String.valueOf(i), this);
+      player.drawCards(5);
       playerList.add(player);
     }
 
@@ -58,60 +62,54 @@ public final class Game {
    * TODO: Implement this
    */
   public void start() {
-    // // How to find the current player?
-    // initialization
+    // initialize playing field
+    // This is to spam some spaces so its clear where your game is starting
+    Player.giveSpace();
+    Player.giveSpace();
+    System.out.println("Welcome to Unus!");
 
-
-    // We know the deck is working properly and is full
-    // try{
-    //   for(int i=0; i<108; i++){
-    //     System.out.println(deck.drawCard());
-    //   }
-    // }catch(Deck.EmptyDeckException f){
-    //   System.out.println("fuck sake");
-    // }
 
     try{
-      // Shuffle deck
-      deck.shuffleDeck();
-
-
-      // Hand out cards
-      // System.out.println("number of players: " + numPlayers);  // NumPlayers is working properly
-
-      System.out.println("Hand: ");
-      System.out.println(players.current().hand);
-      // System.out.println(players.current().hand);
-      for(int i=0; i<numPlayers; i++){  // for each player
-        players.current().drawCards(5);
-        System.out.println(players.current().hand.toString());   // DEBUG
-        players.next();
-      }
-
-      // Add card to play area
       playArea.add(deck.drawCard());
+    }
+    catch(Deck.EmptyDeckException f){
+      System.out.println("Deck was empty, reshuffling.");
+      shufflePlayAreaIntoDeck();
+    }
 
-      if(playArea.size() < 5){
-        System.out.println(playArea.size() + " cards remain in the play area.");
-      }
-    }
-    catch(Deck.EmptyDeckException e){
-      System.out.println("Can't start with empty deck.");
-    }
 
     while(true){
+      // set our current player
       Player curPlayer = players.current();
-      System.out.println("Play Area:");
-      System.out.println(playArea.getFirst());  // print play area
-      // System.out.println(curPlayer.hand);   // print your hand
+
+      // we have a winner, stop the game.
       if(curPlayer.emptyHand()){
         interact(curPlayer + " won!");
         break;
-      }else{
-        playArea.getFirst();
-        curPlayer.takeTurn();
       }
+
+      // interact(printInfo(curPlayer));
+      System.out.println(printInfo(curPlayer));
+
+      /*
+       * current player now gets to take a turn. All error handling should be in the takeTurn method.
+       * we just need to call takeTurn and then set user to next after the turn is complete.
+       */
+      curPlayer.takeTurn();
+      players.next();
     }
+  }
+
+  public String printInfo(Player curPlayer){
+    StringBuilder str = new StringBuilder();
+    str.append("Play Area:\n");
+    str.append(playArea.peek());
+    // DEBUG
+    str.append("| P" + this.players.getCurIndex() + " |");
+
+    str.append(" Hand:\n");
+    str.append(curPlayer.hand.toString());
+    return str.toString();
   }
 
   public String interact(String toUser) {

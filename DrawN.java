@@ -19,28 +19,28 @@ public class DrawN extends Card {
    * Makes the next player draw n cards
    *
    * @param game Current game state
-   *             TODO: Implement this
    */
   @Override
   public void doAction(Game game) {
-    /*
-     * if N == 1, we can check if it matches, and play the card if true
-     * if N == 4; their turn is just skipped after drawing cards
-     */
-    // Need to finish player & hand so we can take the cards and add to current
-    // Player's hand
-    // TODO how to figure out who's turn it is?
+    Player currentPlayer = game.getPlayers().current();
     Deck deck = game.getDeck();
-    try{
-      if(this.getN() == 4){
-        Card card = deck.drawCard();
-        // hand.addCard(card);
-      }else{
-
+    try {
+      if (this.getN() == 4) {
+        for (int i = 0; i < 4; i++) {
+          Card card = deck.drawCard();
+          currentPlayer.hand.addCard(card);
+        }
+        game.getPlayers().next();
+      } else {
+        game.getPlayers().next();
+        Player nextPlayer = game.getPlayers().current();
+        for (int i = 0; i < this.getN(); i++) {
+          Card card = deck.drawCard();
+          nextPlayer.hand.addCard(card);
+        }
       }
-    }
-    catch(Deck.EmptyDeckException e){
-      // Do something lol
+    } catch (Deck.EmptyDeckException e) {
+      // Do something when the deck is empty
     }
   }
 
@@ -50,19 +50,12 @@ public class DrawN extends Card {
    * @param other Other card to match against
    * @return true if other is an instanceof DrawN and our n equals their n, false
    *         otherwise
-   *         D_TODO: Implement this
    */
   @Override
   public boolean matchValue(Card other) {
-    // Check card color
-    // Check card value
-    if(this.getCardColor() == other.getCardColor() || this.matchValue(other)){
-      return true;
-    }else{
-      return false;   // false if neither are matches
-    }
+    // Check card color and card value
+    return (other instanceof DrawN) && (this.getN() == ((DrawN) other).getN()) && (this.getCardColor() == other.getCardColor());
   }
-
 
   @Override
   public String strRep() {

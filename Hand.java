@@ -61,10 +61,10 @@ public final class Hand {
        * playable, if so return true
        */
       if (c.match(topCard)) {
-        return true;
+        return false;
       }
     }
-    return false;
+    return true;
   }
 
   /**
