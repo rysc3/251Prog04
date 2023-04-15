@@ -33,6 +33,6 @@ public class ReverseCard extends Card {
 
   @Override
   public String strRep() {
-    return "R";
+    return "Rev";
   }
 }

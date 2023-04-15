@@ -59,9 +59,33 @@ public final class Game {
    */
   public void start() {
     // // How to find the current player?
-    // while($curPlayer.numCardsRemaining() > 0){
+    // initialization
+    try{
+      if(playArea.size() < 5){
+        System.out.println(playArea.size() + " cards remain in the play area.");
+      }
 
-    // }
+      deck.shuffleDeck();   // shuffle
+      Card top = deck.drawCard();
+      playArea.add(top);
+    }
+    catch(Deck.EmptyDeckException e){
+      System.out.println("Deck was empty, reshuffling play area into deck.");
+      shufflePlayAreaIntoDeck();
+    }
+
+    while(true){
+      Player curPlayer = players.current();
+      System.out.println("Play Area:");
+      System.out.println(playArea.getFirst());
+      if(curPlayer.emptyHand()){
+        interact(curPlayer + " won!");
+        break;
+      }else{
+        playArea.getFirst();
+        curPlayer.takeTurn();
+      }
+    }
   }
 
   public String interact(String toUser) {
@@ -165,14 +189,13 @@ public final class Game {
       deck.add(new NumberCard(Card.Color.GREEN, i));
       deck.add(new NumberCard(Card.Color.YELLOW, i));
     }
-    System.out.println("DEBUG: after");
-    for(int i=0; i<108; i++){
-      System.out.println(i);
-      System.out.println(deck.get(i));
-    }
+    // System.out.println("DEBUG: after");
+    // for(int i=0; i<108; i++){
+    //   System.out.println(i);
+    //   System.out.println(deck.get(i));
+    // }
 
     Deck ret = new Deck(deck);  // conv. from card list to deck before returning
     return ret;
   }
-
 }
