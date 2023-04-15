@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Player {
   private final String name;
   private final Game game;
-  private final Hand hand;
+  public final Hand hand;
 
   public Player(String name, Game game) {
     this.name = name;
@@ -31,7 +31,9 @@ public class Player {
   public void drawCards(int num) {
     try {
       for (int i = 0; i < num; i++) {
+        game.getDeck().toString();  // DEBUG
         Card currentCard = game.getDeck().drawCard();
+        currentCard.prettyPrint();  // DEBUG
         hand.addCard(currentCard);
       }
     } catch (Deck.EmptyDeckException e) { // Deck throws empty deck

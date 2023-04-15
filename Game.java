@@ -129,70 +129,46 @@ public final class Game {
   private Deck createDeck() {
     List<Card> deck = new ArrayList<Card>();
 
-    // Add 19 red cards
-    for (int i = 0; i < 19; i++) {
+    for(int i=1; i<20; i++){
+      // 2 draw 2 of each color
+      if(i < 3){
+        deck.add(new Draw2Card(Card.Color.RED));
+        deck.add(new Draw2Card(Card.Color.BLUE));
+        deck.add(new Draw2Card(Card.Color.GREEN));
+        deck.add(new Draw2Card(Card.Color.YELLOW));
+      }
+
+      // 4 of each wild card
+      if(i < 5){
+        deck.add(new WildCard());
+        deck.add(new WildDraw4Card());
+      }
+
+      // only for 8 copies
+      if(i < 9){
+        // skip
+        deck.add(new SkipCard(Card.Color.RED));
+        deck.add(new SkipCard(Card.Color.BLUE));
+        deck.add(new SkipCard(Card.Color.GREEN));
+        deck.add(new SkipCard(Card.Color.YELLOW));
+
+        // reverse
+        deck.add(new ReverseCard(Card.Color.RED));
+        deck.add(new ReverseCard(Card.Color.BLUE));
+        deck.add(new ReverseCard(Card.Color.GREEN));
+        deck.add(new ReverseCard(Card.Color.YELLOW));
+      }
+
+      // Number cards
       deck.add(new NumberCard(Card.Color.RED, i));
-      if (i > 0) {
-        deck.add(new NumberCard(Card.Color.RED, i));
-      }
-    }
-
-    // Add 19 blue cards
-    for (int i = 0; i < 19; i++) {
       deck.add(new NumberCard(Card.Color.BLUE, i));
-      if (i > 0) {
-        deck.add(new NumberCard(Card.Color.BLUE, i));
-      }
-    }
-
-    // Add 19 green cards
-    for (int i = 0; i < 19; i++) {
       deck.add(new NumberCard(Card.Color.GREEN, i));
-      if (i > 0) {
-        deck.add(new NumberCard(Card.Color.GREEN, i));
-      }
-    }
-
-    // Add 19 yellow cards
-    for (int i = 0; i < 19; i++) {
       deck.add(new NumberCard(Card.Color.YELLOW, i));
-      if (i > 0) {
-        deck.add(new NumberCard(Card.Color.YELLOW, i));
-      }
     }
-
-    // Add 8 skip cards - two of each color
-    for (int i = 0; i < 8; i++) {
-      deck.add(new SkipCard(Card.Color.RED));
-      deck.add(new SkipCard(Card.Color.YELLOW));
-      deck.add(new SkipCard(Card.Color.BLUE));
-      deck.add(new SkipCard(Card.Color.GREEN));
-    }
-
-    // Add 8 reverse cards - two of each color
-    for (int i = 0; i < 8; i++) {
-      deck.add(new ReverseCard(Card.Color.RED));
-      deck.add(new ReverseCard(Card.Color.YELLOW));
-      deck.add(new ReverseCard(Card.Color.BLUE));
-      deck.add(new ReverseCard(Card.Color.GREEN));
-    }
-
-    // Add 8 draw 2 cards - two of each color
-    for (int i = 0; i < 8; i++) {
-      deck.add(new Draw2Card(Card.Color.RED));
-      deck.add(new Draw2Card(Card.Color.YELLOW));
-      deck.add(new Draw2Card(Card.Color.BLUE));
-      deck.add(new Draw2Card(Card.Color.GREEN));
-    }
-
-    // Add 4 wild cards
-    for (int i = 0; i < 4; i++) {
-      deck.add(new WildCard());
-    }
-
-    // Add 4 wild draw 4 cards
-    for (int i = 0; i < 4; i++) {
-      deck.add(new WildDraw4Card());
+    System.out.println("DEBUG: after");
+    for(int i=0; i<108; i++){
+      System.out.println(i);
+      System.out.println(deck.get(i));
     }
 
     Deck ret = new Deck(deck);  // conv. from card list to deck before returning

@@ -30,6 +30,6 @@ public class WildDraw4Card extends Card {
   @Override
   public String strRep() {
     // TODO Auto-generated method stub
-    return "W";
+    return "D+4";
   }
 }
