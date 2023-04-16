@@ -25,7 +25,7 @@ public final class Game {
    * - Initializes playArea with a new ArrayDeque
    *
    * @param numPlayers
-   *                   TODO: Implement this
+   *                   (Done) Implement this
    */
   public Game(int numPlayers) {
     this.io = new Scanner(System.in);
@@ -34,7 +34,7 @@ public final class Game {
 
     List<Player> playerList = new ArrayList<>();
 
-    for(int i=0; i<numPlayers; i++){
+    for (int i = 0; i < numPlayers; i++) {
       Player player = new Player(String.valueOf(i), this);
       player.drawCards(5);
       playerList.add(player);
@@ -56,7 +56,7 @@ public final class Game {
    * - The current player is received from the UnusIterator
    * - The player then takes their turn
    * - The UnusIterator is then moved to the next player
-   * TODO: Implement this
+   * (Done) Implement this
    */
   public void start() {
     // initialize playing field
@@ -65,42 +65,39 @@ public final class Game {
     Player.giveSpace();
     System.out.println("Welcome to Unus!");
 
-
-    try{
-      playArea.add(deck.drawCard());
-    }
-    catch(Deck.EmptyDeckException f){
+    try {
+      playArea.add(deck.drawCard());  // Show play area
+    } catch (Deck.EmptyDeckException f) {
       System.out.println("Deck was empty, reshuffling.");
       shufflePlayAreaIntoDeck();
     }
 
-
-    while(true){
+    while (true) {
       // set our current player
-
       Player curPlayer = players.current();
 
       // interact(printInfo(curPlayer));
       System.out.println(printInfo(curPlayer));
 
       /*
-       * current player now gets to take a turn. All error handling should be in the takeTurn method.
-       * we just need to call takeTurn and then set user to next after the turn is complete.
+       * current player now gets to take a turn. All error handling should be in the
+       * takeTurn method.
+       * we just need to call takeTurn and then set user to next after the turn is
+       * complete.
        */
-      curPlayer.takeTurn();
+      curPlayer.takeTurn();   // < Most of the work is done in takeTurn
 
       // we have a winner, stop the game.
-      if(curPlayer.emptyHand()){
+      if (curPlayer.emptyHand()) {
         interact("Player " + curPlayer + " won!");
         break;
-      }else{
+      } else {
         players.next();
       }
     }
   }
 
-
-  public String printInfo(Player curPlayer){
+  public String printInfo(Player curPlayer) {
     StringBuilder str = new StringBuilder();
     str.append("Play Area:\n");
     str.append(playArea.peek());
@@ -172,14 +169,14 @@ public final class Game {
    * - 4 wild draw 4 cards
    *
    * @return A standard Unus deck of 108 cards
-   *         TODO: Implement this
+   *         (Done) Implement this
    */
   private Deck createDeck() {
     List<Card> deck = new ArrayList<Card>();
 
-    for(int i=1; i<20; i++){
+    for (int i = 1; i < 20; i++) {
       // 2 draw 2 of each color
-      if(i < 3){
+      if (i < 3) {
         deck.add(new Draw2Card(Card.Color.RED));
         deck.add(new Draw2Card(Card.Color.BLUE));
         deck.add(new Draw2Card(Card.Color.GREEN));
@@ -187,13 +184,13 @@ public final class Game {
       }
 
       // 4 of each wild card
-      if(i < 5){
+      if (i < 5) {
         deck.add(new WildCard());
         deck.add(new WildDraw4Card());
       }
 
       // only for 8 copies
-      if(i < 9){
+      if (i < 9) {
         // skip
         deck.add(new SkipCard(Card.Color.RED));
         deck.add(new SkipCard(Card.Color.BLUE));
@@ -213,13 +210,8 @@ public final class Game {
       deck.add(new NumberCard(Card.Color.GREEN, i));
       deck.add(new NumberCard(Card.Color.YELLOW, i));
     }
-    // System.out.println("DEBUG: after");
-    // for(int i=0; i<108; i++){
-    //   System.out.println(i);
-    //   System.out.println(deck.get(i));
-    // }
 
-    Deck ret = new Deck(deck);  // conv. from card list to deck before returning
+    Deck ret = new Deck(deck); // conv. from card list to deck before returning
     return ret;
   }
 }

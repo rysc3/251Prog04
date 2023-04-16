@@ -30,17 +30,17 @@ public final class Deck {
    *                            D_TODO: Implement this
    */
   public Card drawCard() throws EmptyDeckException {
-    if(cards.size() == 0){  // If deck is empty
-      throw new EmptyDeckException();   // Throw exception
-    }else{  // If deck is not empty
+    if (cards.size() == 0) { // If deck is empty
+      throw new EmptyDeckException(); // Throw exception
+    } else { // If deck is not empty
       /*
        * in order to print out a warning when there are only a few cards left,
        * we need to store the card in a variable and then check, rather than
        * just:
        * return cards.remove(0);
        */
-      Card newCard = cards.remove(0);   // Pos. 0 is top of deck
-      if(cards.size() < 5){
+      Card newCard = cards.remove(0); // Pos. 0 is top of deck
+      if (cards.size() < 5) {
         System.out.println("Less than 5 cards remain in the deck.");
       }
       return newCard;

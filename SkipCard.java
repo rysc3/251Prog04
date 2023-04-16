@@ -11,7 +11,7 @@ public class SkipCard extends Card {
 
   @Override
   public void doAction(Game game) {
-    if(this.matchValue(game.getTopCard())){
+    if (this.matchValue(game.getTopCard())) {
       game.playCard(this);
     }
   }
@@ -23,12 +23,12 @@ public class SkipCard extends Card {
      * - Color matches
      * - other card is also a skip
      */
-    if(this.getCardColor() == other.getCardColor()){  // the correct color
+    if (this.getCardColor() == other.getCardColor()) { // the correct color
       return true;
-    }else if(other instanceof SkipCard){  // another skip
+    } else if (other instanceof SkipCard) { // another skip
       return true;
     }
-    return false;   // doesn't match
+    return false; // doesn't match
   }
 
   @Override

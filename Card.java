@@ -60,7 +60,7 @@ public abstract class Card {
    *
    * @param other Card to match this card against
    * @return true if the two cards match and false otherwise
-   *         D_TODO: Implement this
+   *         (Done) Implement this
    */
   public boolean match(Card other) {
     if (this == other) { // exact match
@@ -69,7 +69,7 @@ public abstract class Card {
     } else if (this.cardColor == Card.Color.WILD || other.cardColor == Card.Color.WILD) {
       return true;
       // if card number matches
-    }else if(this.cardColor == other.cardColor || this.strRep().equals(other.strRep())){
+    } else if (this.cardColor == other.cardColor || this.strRep().equals(other.strRep())) {
       return true;
     }
     return false;
@@ -84,12 +84,12 @@ public abstract class Card {
     game.playCard(this);
   }
 
-  public int checkDraw(){
+  public int checkDraw() {
     int draw = 0;
-    if(this.strRep().charAt(0) == 'D'){
+    if (this.strRep().charAt(0) == 'D') {
       // this means it is a draw card
       draw = Integer.parseInt(this.strRep());
-    }else{
+    } else {
       return 0;
     }
     return draw;
@@ -114,7 +114,7 @@ public abstract class Card {
    * - This list is then returned
    *
    * @return List of lines of this card
-   *         D_TODO: Implement t his
+   *         (Done) Implement t his
    */
   public List<String> prettyPrint() {
     List<String> list = new ArrayList<String>();
@@ -122,9 +122,9 @@ public abstract class Card {
     list.add("/-------\\");
     if (this.strRep().length() == 3) {
       list.add("| " + this.cardColor + " |" + this.strRep() + "|"); // Spaces with short strRep
-    } else if(this.strRep().length() == 2){
+    } else if (this.strRep().length() == 2) {
       list.add("| " + this.cardColor + " |" + this.strRep() + " |"); // No space with long strRap
-    }else {
+    } else {
       list.add("| " + this.cardColor + " | " + this.strRep() + " |"); // No space with long strRap
     }
     list.add("\\-------/");
@@ -132,7 +132,7 @@ public abstract class Card {
   }
 
   @Override
-  public final String toString() {  //TODO Fix this somehow
+  public final String toString() { // TODO Fix this somehow
     StringBuilder sb = new StringBuilder();
 
     for (String line : prettyPrint()) {

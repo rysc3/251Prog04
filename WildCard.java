@@ -11,7 +11,7 @@ public class WildCard extends Card {
 
   @Override
   public void doAction(Game game) {
-    if(this.matchValue(game.getTopCard())){
+    if (this.matchValue(game.getTopCard())) {
       game.playCard(this);
     }
   }
@@ -25,7 +25,9 @@ public class WildCard extends Card {
      * this function should just always return true;
      */
     // wild always matches
-    if(this instanceof WildCard || other instanceof WildCard || other instanceof WildDraw4Card) { return true; }
+    if (this instanceof WildCard || other instanceof WildCard || other instanceof WildDraw4Card) {
+      return true;
+    }
     return false;
   }
 

@@ -66,7 +66,7 @@ public final class UnusIterator<T> {
    * - The internal index should then be returned
    *
    * @return Index of next player in the order respecting skips and reverses
-   *         D_TODO: Implement this
+   *         (Done) Implement this
    */
 
   private int findNextIndex(boolean decrement) {
@@ -103,7 +103,7 @@ public final class UnusIterator<T> {
   /**
    * Simply calls flip on the dir member variable and
    * overwrites dir with this value
-   * D_TODO: Implement this
+   * (Done) Implement this
    */
   public void reverse() {
     this.dir = dir.flip();
@@ -113,20 +113,20 @@ public final class UnusIterator<T> {
    * Increments the nth element of skips by 1
    *
    * @param n Index in skips list to increment
-   *          D_TODO: Implement this
+   *          (Done) Implement this
    */
   public void skip(int n) {
-    if(n < 0){
-      n = 0;  // I guess this works
+    if (n < 0) {
+      n = 0; // I guess this works
     }
-    if(dir == Direction.FORWARD){
+    if (dir == Direction.FORWARD) {
       curIndex = getCurIndex() + n;
-    }else{
+    } else {
       curIndex = getCurIndex() - n;
     }
   }
 
-  public void skipIndex(int index){
+  public void skipIndex(int index) {
     skip(index);
   }
 }

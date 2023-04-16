@@ -22,7 +22,7 @@ public final class Hand {
     return cards.size();
   }
 
-  public Card getCard(int index){
+  public Card getCard(int index) {
     return cards.get(index);
   }
 
@@ -35,19 +35,21 @@ public final class Hand {
    * @param game  State of the game
    * @param index Index of desired card to play in cards
    * @throws Card.CannotPlayCardException
-   *                                      D_TODO: Implement this
+   *                                      (Done) Implement this
    */
   public void playCard(Game game, int index) throws Card.CannotPlayCardException {
     // Invalid input given
-    if(index < 0 || index > numCardsRemaining()){
+    if (index < 0 || index > numCardsRemaining()) {
       throw new Card.CannotPlayCardException();
     }
     Card playedCard = cards.get(index); // get current card
     if (playedCard.match(game.getTopCard())) { // if valid card is given
       game.playCard(playedCard); // play card
       /*
-       * easier to handle this after the card has been played, since we can get the top card
-       * as many times as we want but its more work to get the card out of the users hand.
+       * easier to handle this after the card has been played, since we can get the
+       * top card
+       * as many times as we want but its more work to get the card out of the users
+       * hand.
        * need to then figure out if the card was a special card,
        * Draw 2, 4
        * Skip
@@ -55,22 +57,6 @@ public final class Hand {
        *
        * and if so, pass the info to unusIterator
        */
-      // Player added = game.getPlayers().getAtIndex(game.getPlayers().getCurIndex());
-      // Player added = game.getPlayers().peekNext();
-      // if(game.getTopCard().strRep().charAt(0) == 'D'){  // Draw Card
-
-      //   // Check if the strRep of the card is a +4
-      //   if(game.getTopCard().strRep().charAt(game.getTopCard().strRep().length() - 1) == '4'){
-      //     added.drawCards(4);
-      //   }else{
-      //     added.drawCards(2);
-      //   }
-      //   game.getPlayers().skip(1);  // If you get a draw card your turn should be skipped as well.
-      // }else if(game.getTopCard().strRep().charAt(0) == 'S'){  // Skip Card
-      //   // ask n or s, then do the skip, remove the other place it asks for n or s
-      // }else if(game.getTopCard().strRep().charAt(0) == 'R'){  // Reverse Card
-      //   game.getPlayers().reverse();
-      // }
       cards.remove(index); // remove from hand
     } else {
       throw new Card.CannotPlayCardException();
@@ -83,7 +69,7 @@ public final class Hand {
    *
    * @param topCard Card currently in play
    * @return true if match is found and false otherwise
-   *         D_TODO: Implement this
+   *         (Done) Implement this
    */
   public boolean noMatches(Card topCard) {
     for (Card c : cards) {
@@ -122,7 +108,7 @@ public final class Hand {
    * 0 1
    *
    * @return
-   *         D_TODO: Implement this
+   *         (Done) Implement this
    */
   @Override
   public String toString() {
@@ -153,10 +139,6 @@ public final class Hand {
     // Print index labels
     str.append("    " + "0");
     for (int i = 1; i < cards.size(); i++) {
-      // TODO Need to do based off of card strRep.length
-      // for(int j=0; j<i; j++){
-      //   str.append(" ");
-      // }
       str.append("        " + i);
     }
     str.append("\n");
@@ -164,6 +146,7 @@ public final class Hand {
     return str.toString();
   }
 
+  // lol didn't see this til now
   // Code you can use to test your implementation
   public static void main(String[] args) {
     Hand hand = new Hand(Arrays.asList(new Reverse(Card.Color.RED),

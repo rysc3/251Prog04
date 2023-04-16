@@ -54,7 +54,8 @@ public class DrawN extends Card {
   @Override
   public boolean matchValue(Card other) {
     // Check card color and card value
-    return (other instanceof DrawN) && (this.getN() == ((DrawN) other).getN()) && (this.getCardColor() == other.getCardColor());
+    return (other instanceof DrawN) && (this.getN() == ((DrawN) other).getN())
+        && (this.getCardColor() == other.getCardColor());
   }
 
   @Override
