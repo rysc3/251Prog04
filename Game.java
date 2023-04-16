@@ -77,13 +77,8 @@ public final class Game {
 
     while(true){
       // set our current player
-      Player curPlayer = players.current();
 
-      // we have a winner, stop the game.
-      if(curPlayer.emptyHand()){
-        interact(curPlayer + " won!");
-        break;
-      }
+      Player curPlayer = players.current();
 
       // interact(printInfo(curPlayer));
       System.out.println(printInfo(curPlayer));
@@ -93,16 +88,24 @@ public final class Game {
        * we just need to call takeTurn and then set user to next after the turn is complete.
        */
       curPlayer.takeTurn();
-      players.next();
+
+      // we have a winner, stop the game.
+      if(curPlayer.emptyHand()){
+        interact("Player " + curPlayer + " won!");
+        break;
+      }else{
+        players.next();
+      }
     }
   }
+
 
   public String printInfo(Player curPlayer){
     StringBuilder str = new StringBuilder();
     str.append("Play Area:\n");
     str.append(playArea.peek());
     // DEBUG
-    str.append("| P" + this.players.getCurIndex() + " |");
+    str.append("|P" + this.players.getCurIndex() + "|");
 
     str.append(" Hand:\n");
     str.append(curPlayer.hand.toString());

@@ -38,6 +38,10 @@ public final class Hand {
    *                                      D_TODO: Implement this
    */
   public void playCard(Game game, int index) throws Card.CannotPlayCardException {
+    // Invalid input given
+    if(index < 0 || index > numCardsRemaining()){
+      throw new Card.CannotPlayCardException();
+    }
     Card playedCard = cards.get(index); // get current card
     if (playedCard.match(game.getTopCard())) { // if valid card is given
       game.playCard(playedCard); // play card
@@ -51,23 +55,22 @@ public final class Hand {
        *
        * and if so, pass the info to unusIterator
        */
-      Player added = game.getPlayers().getAtIndex(game.getPlayers().getCurIndex());
-      if(game.getTopCard().strRep().charAt(0) == 'D'){  // Draw Card
+      // Player added = game.getPlayers().getAtIndex(game.getPlayers().getCurIndex());
+      // Player added = game.getPlayers().peekNext();
+      // if(game.getTopCard().strRep().charAt(0) == 'D'){  // Draw Card
 
-        // Check if the strRep of the card is a +4
-        if(game.getTopCard().strRep().charAt(game.getTopCard().strRep().length() - 1) == '4'){
-          added.drawCards(4);
-        }else{
-          added.drawCards(2);
-        }
-      }
-      if(game.getTopCard().strRep().charAt(0) == 'S'){  // Skip Card
-        game.getPlayers().skip(1);
-      }
-      if(game.getTopCard().strRep().charAt(0) == 'R'){  // Reverse Card
-        game.getPlayers().reverse();
-      }
-
+      //   // Check if the strRep of the card is a +4
+      //   if(game.getTopCard().strRep().charAt(game.getTopCard().strRep().length() - 1) == '4'){
+      //     added.drawCards(4);
+      //   }else{
+      //     added.drawCards(2);
+      //   }
+      //   game.getPlayers().skip(1);  // If you get a draw card your turn should be skipped as well.
+      // }else if(game.getTopCard().strRep().charAt(0) == 'S'){  // Skip Card
+      //   // ask n or s, then do the skip, remove the other place it asks for n or s
+      // }else if(game.getTopCard().strRep().charAt(0) == 'R'){  // Reverse Card
+      //   game.getPlayers().reverse();
+      // }
       cards.remove(index); // remove from hand
     } else {
       throw new Card.CannotPlayCardException();
@@ -139,7 +142,7 @@ public final class Hand {
       for (Card c : this.cards) {
         List<String> prettyPrintedCard = c.prettyPrint();
         if (i < prettyPrintedCard.size()) {
-          str.append(" " + prettyPrintedCard.get(i) + " ");
+          str.append(prettyPrintedCard.get(i));
         } else {
           str.append("      "); // Use spaces of equal width
         }
@@ -148,8 +151,13 @@ public final class Hand {
     }
 
     // Print index labels
-    for (int i = 0; i < cards.size(); i++) {
-      str.append("     " + i + "     ");
+    str.append("    " + "0");
+    for (int i = 1; i < cards.size(); i++) {
+      // TODO Need to do based off of card strRep.length
+      // for(int j=0; j<i; j++){
+      //   str.append(" ");
+      // }
+      str.append("        " + i);
     }
     str.append("\n");
 

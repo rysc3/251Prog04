@@ -35,5 +35,4 @@ public class SkipCard extends Card {
   public String strRep() {
     return "S";
   }
-
 }

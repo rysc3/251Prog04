@@ -120,18 +120,19 @@ public abstract class Card {
     List<String> list = new ArrayList<String>();
 
     list.add("/-------\\");
-    if (this.strRep().length() == 1) {
-      list.add("| " + this.cardColor + " | " + this.strRep() + " |"); // Spaces with short strRep
-    } else {
-      list.add("| " + this.cardColor + " |" + this.strRep() + "|"); // No space with long strRap
+    if (this.strRep().length() == 3) {
+      list.add("| " + this.cardColor + " |" + this.strRep() + "|"); // Spaces with short strRep
+    } else if(this.strRep().length() == 2){
+      list.add("| " + this.cardColor + " |" + this.strRep() + " |"); // No space with long strRap
+    }else {
+      list.add("| " + this.cardColor + " | " + this.strRep() + " |"); // No space with long strRap
     }
     list.add("\\-------/");
-
     return list;
   }
 
   @Override
-  public final String toString() {
+  public final String toString() {  //TODO Fix this somehow
     StringBuilder sb = new StringBuilder();
 
     for (String line : prettyPrint()) {

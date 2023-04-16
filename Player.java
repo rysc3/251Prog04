@@ -70,6 +70,8 @@ public class Player {
   public void takeTurn() {
     boolean valid = false;
 
+    // check if htey have a skip, skip if they ahve a skip
+
     while (!valid) {
 
       // Loop through to handle cases where you don't start with a valid card to be played.
@@ -106,6 +108,26 @@ public class Player {
           if(inputInt < 0 || inputInt > hand.numCardsRemaining()){
             game.interact(inputStr + " is not a valid index, please try again.");
           }else{
+            if(hand.getCard(inputInt) instanceof SkipCard){
+              String input2 = game.interact("who would you like to skip?");
+              if(input2.charAt(0) == 'n'){
+                game.getPlayers().skipIndex(inputInt);
+              }else{
+                input2 = game.interact("Which player would you like to skip?");
+                int intInput2 = Integer.parseInt(input2);
+                game.getPlayers().skip(1);
+              }
+            }else if(hand.getCard(inputInt) instanceof ReverseCard){
+              game.getPlayers().reverse();
+            }else if(hand.getCard(inputInt) instanceof Draw2Card){
+              Player added = game.getPlayers().peekNext();
+              added.drawCards(2);
+              game.getPlayers().skip(1);
+            }else if(hand.getCard(inputInt) instanceof WildDraw4Card){
+              Player added = game.getPlayers().peekNext();
+              added.drawCards(4);
+              game.getPlayers().skip(1);
+            }
             hand.playCard(game, inputInt);
             valid = true;
           }

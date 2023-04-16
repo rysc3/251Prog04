@@ -68,27 +68,15 @@ public final class UnusIterator<T> {
    * @return Index of next player in the order respecting skips and reverses
    *         D_TODO: Implement this
    */
+
   private int findNextIndex(boolean decrement) {
     int intIndex = getCurIndex() + dir.getAdder();
-    if(intIndex < 0){   // Loop around if we reach 0
+    if (intIndex < 0) { // Loop around if we reach 0
       intIndex = len - 1;
-    }else if(intIndex >= len){
+    } else if (intIndex >= len) {
       intIndex = 0;
     }
 
-    while(skips.get(intIndex) != 0){
-      if(decrement){
-        skips.set(intIndex, skips.get(intIndex) - 1);
-      }
-    }
-
-    intIndex += dir.getAdder();
-
-    if(intIndex < 0){
-      intIndex = len - 1;
-    }else if(intIndex >= len){
-      intIndex = 0;
-    }
     return intIndex;
   }
 
@@ -96,7 +84,7 @@ public final class UnusIterator<T> {
     return ls.get(curIndex);
   }
 
-  public T getAtIndex(int index){
+  public T getAtIndex(int index) {
     return this.ls.get(index);
   }
 
@@ -118,7 +106,7 @@ public final class UnusIterator<T> {
    * D_TODO: Implement this
    */
   public void reverse() {
-    dir.flip();
+    this.dir = dir.flip();
   }
 
   /**
@@ -128,9 +116,17 @@ public final class UnusIterator<T> {
    *          D_TODO: Implement this
    */
   public void skip(int n) {
-    // only do the skip if a valid n value is passed
-    if(n >= 0 && n < skips.size()){
-      skips.set(n, skips.get(n) + 1);
+    if(n < 0){
+      n = 0;  // I guess this works
     }
+    if(dir == Direction.FORWARD){
+      curIndex = getCurIndex() + n;
+    }else{
+      curIndex = getCurIndex() - n;
+    }
+  }
+
+  public void skipIndex(int index){
+    skip(index);
   }
 }
