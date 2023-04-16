@@ -5,7 +5,7 @@ Overall checklist:
   - Starts in Forward direction   #Done
   - Player can play cards
     - allow same color  #Done
-    - allow same number / StrRep  #Done (S+S)
+    - allow same number / StrRep  #Done (S+S) (N+N) (W+W) (R+R)
     - allow wild any time   #Done
   - catches invalid int as input  #Done
   - catches string as input   #Done
